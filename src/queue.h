@@ -11,6 +11,8 @@
 extern "C" {
 #endif
 
+#include "common.h"
+
 #include <stdlib.h>
 #include <stdint.h>
 #include <sys/types.h>
