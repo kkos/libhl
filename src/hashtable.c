@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <limits.h>
 #include <strings.h>
+#include <sched.h>
 
 #include "bsd_queue.h"
 #include "atomic_defs.h"
@@ -288,6 +289,7 @@ ht_get_list(hashtable_t *table, uint32_t hash)
 {
     size_t index = hash%ATOMIC_READ(table->size);
 
+#ifdef THREAD_SAFE
     // first try updating the status assuming we are the first reader requesting
     // access to the table
     uint32_t status;
@@ -315,6 +317,7 @@ ht_get_list(hashtable_t *table, uint32_t hash)
     }
 
     status++; // status now holds the value we have updated in table->status
+#endif
 
     // we can now safely retrieve the list
     ht_items_list_t *list = table->items[index];
@@ -324,6 +327,7 @@ ht_get_list(hashtable_t *table, uint32_t hash)
     if (list)
         SPIN_LOCK(list->lock);
 
+#ifdef THREAD_SAFE
     // now let's update the status by decrementing it
     // NOTE: if we are the last active reader it will go down to the idle state
     do {
@@ -331,6 +335,7 @@ ht_get_list(hashtable_t *table, uint32_t hash)
             break;
         status = ATOMIC_CAS_RETURN(table->status, HT_STATUS_READ, HT_STATUS_IDLE);
     } while (status > HT_STATUS_READ);
+#endif
 
     // NOTE: the returned list is already locked
     return list;
