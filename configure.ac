@@ -44,8 +44,19 @@ AC_FUNC_STRCOLL
 AX_PTHREAD( [
             AC_DEFINE(HAVE_PTHREAD,1,[Define if you have POSIX threads libraries and header files.])
             CLIBS="$PTHREAD_LIBS $LIBS"
-            CFLAGS="$CFLAGS $PTHREAD_CFLAGS -DTHREAD_SAFE"
+            CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
             CC="$PTHREAD_CC"],[])
+
+AC_ARG_ENABLE(thread-safe,
+	[AS_HELP_STRING([--enable-thread-safe],
+	    [thread safe feature (default is no)])],
+	[],
+	[enable_thread_safe=no]
+)
+
+AS_IF([test "x$enable_thread_safe" != xno],
+    [AC_DEFINE([THREAD_SAFE], [1], [thread safe support])]
+)
 
 # Not all compilers include /usr/local in the include and link path
 if test -d /usr/local/include; then
