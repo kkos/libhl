@@ -6,6 +6,7 @@
 #include <string.h>
 #include <errno.h>
 
+#include "common.h"
 #include "linklist.h"
 #include "atomic_defs.h"
 

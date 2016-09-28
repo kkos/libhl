@@ -1,6 +1,8 @@
+#include <stdio.h>
+
+#include "common.h"
 #include "binheap.h"
 #include "linklist.h"
-#include <stdio.h>
 
 typedef struct _binomial_tree_node_s {
     void *key;

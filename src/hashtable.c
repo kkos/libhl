@@ -6,6 +6,7 @@
 #include <strings.h>
 #include <sched.h>
 
+#include "common.h"
 #include "bsd_queue.h"
 #include "atomic_defs.h"
 
