@@ -8,6 +8,8 @@
 #include "queue.h"
 #include "refcnt.h"
 #include "rqueue.h"
+
+#include "common.h"
 #include "atomic_defs.h"
 
 #pragma pack(push, 1)

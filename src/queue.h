@@ -11,16 +11,9 @@
 extern "C" {
 #endif
 
-#include "common.h"
-
 #include <stdlib.h>
 #include <stdint.h>
 #include <sys/types.h>
-#ifdef WIN32
-#ifdef THREAD_SAFE
-#include <w32_pthread.h>
-#endif
-#endif
 #include <string.h> // for memset
 
 /**
